@@ -31,13 +31,6 @@ struct ContentView: View {
 						.ignoresSafeArea(.all)
 						.frame(maxWidth: .infinity, maxHeight: .infinity)
 						.blur(radius: 20)
-				} else {
-					Image("WallpaperFallback")
-						.resizable()
-						.scaledToFill()
-						.ignoresSafeArea(.all)
-						.frame(maxWidth: .infinity, maxHeight: .infinity)
-						.blur(radius: 20)
 				}
 			}
 			VStack {
@@ -179,14 +172,6 @@ struct WallpaperSelector: View {
 	@State private var selectedItem: PhotosPickerItem? = nil
 	@State private var selectedImage: Image? = nil
 	
-//	init(wallpaperImage: Binding<Image?>, isPresented: Binding<Bool>) {
-//		self._isPresented = isPresented
-//		self._wallpaperImageData = wallpaperImageData
-//		pickerConfiguration.filter = photoFilter
-//		pickerConfiguration.preferredAssetRepresentationMode = .current
-//		pickerConfiguration.selection = .default
-//	}
-	
 	var body: some View {
 		VStack {
 			Text("Select Your Wallpaper Source")
@@ -225,8 +210,9 @@ struct WallpaperSelector: View {
 				}
 			}
 			
-			Button("Use Solid Color") {
-					// Future implementation: Color picker logic
+			Button("Reset to default") {
+				wallpaperImageData = nil
+				selectedImage = nil
 			}
 			.padding()
 			.buttonStyle(.bordered)
