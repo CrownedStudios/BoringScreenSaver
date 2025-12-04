@@ -6,6 +6,7 @@
 //
 
 // FIXME: Fix settings icon not actually being on-top (check ipad)
+// FIXME: Attach the "Current Wallpaper" capsule to the preview window
 
 // TODO: Add notifications at a glance (Stack and # of notifications)
 // TODO: Add widgets??
@@ -221,7 +222,6 @@ struct SettingsView: View {
 						}
 						
 						// Wallpaper Blur Option
-						
 						Group {
 							VStack(alignment: .leading) {
 								HStack {
