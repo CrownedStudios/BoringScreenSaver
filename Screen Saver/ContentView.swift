@@ -53,8 +53,12 @@ struct ContentView: View {
 	private func setupDimmingTimer() {
 		dimmingTask?.cancel()
 		
-		isDimmed = false
-		if dimmingSelectionTag != 6 {
+		
+		withAnimation(.easeInOut(duration: 0.6)) {
+			isDimmed = false
+		}
+		
+		if dimmingSelectionTag != 6 && isSettingsPresented == false {
 			let timeout = dimTimeoutSeconds
 			dimmingTask = Task {
 				do {
@@ -105,6 +109,10 @@ struct ContentView: View {
 					Spacer()
 					
 					Button(action: {
+						if isDimmed {
+							setupDimmingTimer()
+							return
+						}
 						isSettingsPresented = true
 					}) {
 						Image(systemName: "gearshape.fill")
@@ -118,7 +126,7 @@ struct ContentView: View {
 								}
 							)
 							.shadow(radius: 6)
-							.opacity(isDimmed ? 0.3 : 1.0)
+							.opacity(isDimmed ? 0 : 1.0)
 					}
 					.padding(.trailing, 20)
 				}
@@ -129,21 +137,21 @@ struct ContentView: View {
 						Text(Date.now.formatted(customDateFormat))
 							.font(.system(size: 25, weight: .semibold))
 							.foregroundColor(.white.opacity(0.7))
-							.opacity(isDimmed ? 0.3 : 1.0)
+							.opacity(isDimmed ? 0.8 : 1.0)
 						
 						Text(Date(), style: .time)
 							.bold(true)
 							.padding(1)
 							.font(.system(size: 64, weight: .heavy))
 							.shadow(radius: 10)
-							.opacity(isDimmed ? 0.3 : 1.0)
+							.opacity(isDimmed ? 0.8 : 1.0)
 						
 						HStack {
 							Spacer()
 							Text(customText)
 								.padding(5)
 								.font(.caption)
-								.opacity(isDimmed ? 0.3 : 0.7)
+								.opacity(isDimmed ? 0.6 : 0.7)
 							Spacer()
 						}
 					}
@@ -171,6 +179,7 @@ struct ContentView: View {
 		}
 		.onLongPressGesture {
 			isSettingsPresented = true
+			setupDimmingTimer()
 		}
 		.sheet(isPresented: $isSettingsPresented) {
 			SettingsView(
@@ -183,9 +192,7 @@ struct ContentView: View {
 		}
 		
 		.onChange(of: isSettingsPresented) { isPresented in
-			if !isPresented {
-				setupDimmingTimer()
-			}
+			setupDimmingTimer()
 			savePersistence()
 		}
     }
