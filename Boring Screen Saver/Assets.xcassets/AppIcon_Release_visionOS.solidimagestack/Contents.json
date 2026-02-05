@@ -1,0 +1,17 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "layers" : [
+    {
+      "filename" : "MountainSide_visionOS.solidimagestacklayer"
+    },
+    {
+      "filename" : "Sun_visionOS.solidimagestacklayer"
+    },
+    {
+      "filename" : "Background_visionOS.solidimagestacklayer"
+    }
+  ]
+}
